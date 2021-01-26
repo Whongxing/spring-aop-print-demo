@@ -43,3 +43,25 @@ SpringAop知识点学习
  #### 四、建立一个注解类
     对应代码中的java/utilTest/annotation/MyLog.java
     
+
+#核心代码
+```
+   // @Pointcut("execution(* utilTest.*.*(..))")
+    @Pointcut("@annotation(utilTest.annotion.MyLog)")
+    private void aspectJMethod(){};
+
+
+    @Before("aspectJMethod()")
+    public void a(JoinPoint joinPoint){
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method method = signature.getMethod();
+        //获取注解类的属性
+        MyLog log = method.getAnnotation(MyLog.class);
+        if(log!=null){
+            System.out.println(log.desc());
+            System.out.println(log.name());
+        }
+    }
+
+```
+    
